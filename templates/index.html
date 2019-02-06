@@ -1,79 +1,86 @@
 <!doctype html>
 <html lang="en">
 <head>
-	<!-- Required meta tags -->
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-	<!-- Bootstrap CSS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-	<title>Book Reviews</title>ls
+    <script src="{{ url_for('static', filename='index.js') }}"></script>
+    <!--<script> src="/static/index.js"</script>-->
+
+    <title>SocketIO</title>
 </head>
 <body>
-	<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-		<span class="navbar-brand ">Hi user_name</span>
-		<div class="collapse navbar-collapse" id="navbarCollapse">
-			<div class="navbar-nav mr-auto">
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <span class="navbar-brand ">Hi user_name</span>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <div class="navbar-nav mr-auto">
 
-			</div>
-
-
-			<form class="form-inline mt-2 mt-md-0"  action="/logout"  method="POST">
-
-				<button class="btn btn-outline-info my-2 my-sm-0 " type="submit">Log Out</button>
-			</form>
-		</div>
-	</nav>
+        </div>
 
 
-	<!-- Main jumbotron for a primary marketing message or call to action -->
-	<div class="jumbotron text-center">
-		<div class="container">
-			<h1 class="jumbotron-heading">num_results results were found!</h1>
+        <form class="form-inline mt-2 mt-md-0" action="/logout" method="POST">
+
+            <button class="btn btn-outline-info my-2 my-sm-0 " type="submit">Log Out</button>
+        </form>
+    </div>
+</nav>
 
 
+<!-- Main jumbotron for a primary marketing message or call to action -->
+<div class="jumbotron text-center">
+    <div class="container">
+        <h1 class="jumbotron-heading">Welcome, enter a username</h1>
+        <br>
+        <br>
+
+        <div class="row">
+            <div class="col-md-4 offset-md-4">
+                <form action="/channel" method="POST">
+                    <div class="form-group">
+
+                        <input type="text" class="form-control" name="user_name" placeholder="Username">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+
+            </div>
+        </div>
 
 
-		</div>
-	</div>
+    </div>
+</div>
+
+<!--Main text entry-->
+<div class="container">
+
+    <div class="row">
 
 
-	<div class="container">
-
-		<div class="row">
-			<div class="col-md-2">
-				<div class="card mb-4 box-shadow">
-					<img class="card-img-top" src="https://via.placeholder.com/348x225"  height="155px" width="200">
-					<div class="card-body">
-						<p class="card-text">Book title <br> author  <br> isbn  <br> etc</p>
-						<div class="d-flex justify-content-between align-items-center">
-							<form action="/page"  method="GET">
-
-								<button  class="btn btn-sm btn-outline-secondary" type="submit"> View  </button>
-
-							</form>
+    </div>
+</div>
 
 
-						</div>
-					</div>
-				</div>
-			</div>
+<footer class="footer">
+    <div class="container">
+        <span class="text-muted">By Oscar Morales</span>
+    </div>
+</footer>
 
-
-		</div>
-	</div>
-
-	<footer class="footer">
-		<div class="container">
-			<span class="text-muted">By Oscar Morales</span>
-		</div>
-	</footer>
-
-	<!-- Optional JavaScript -->
-	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 </body>
 </html>
