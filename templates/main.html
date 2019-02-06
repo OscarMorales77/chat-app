@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+{% block title_page %} Main Page{% endblock %}
+
+
+{% block extra %}
+<script type="text/javascript" src="{{ url_for('static', filename='main.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+
+
+<div class="jumbotron text-center">
+    <div class="container">
+        <h1 class="jumbotron-heading">Welcome, create or join a channel.</h1>
+        <br>
+        <br>
+
+        <div class="row">
+            <div class="col-md-4 offset-md-4">
+                <h1>Create</h1>
+                <form id="channel" method="POST">
+                    <div class="form-group">
+
+                        <input type="text" autofocus class="form-control" id="inputValue" placeholder="Channel Name">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+
+            </div>
+        </div>
+        <br>
+        <br>
+
+        <div class="row">
+            <h1 class="col-md-4 offset-md-4">Current Channels</h1>
+            <div class="col-md-4 offset-md-4">
+                <ul id="items">
+                    {% for item in channel_list %}
+                    <li><a href="/channel/{{item}}">{{item}}</a></li>
+                    {% endfor %}
+
+                </ul>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+{% endblock %}

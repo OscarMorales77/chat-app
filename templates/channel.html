@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block title_page %} Main Page{% endblock %}
+
+
+{% block extra %}
+<script type="text/javascript" src="{{ url_for('static', filename='channel.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+
+
+<div class="jumbotron text-center">
+    <div class="container">
+        <h1 class="jumbotron-heading">Channel Name: {{channel_name}}</h1>
+        <br>
+        <br>
+
+
+    </div>
+</div>
+
+{% endblock %}
