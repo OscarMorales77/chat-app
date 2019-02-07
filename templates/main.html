@@ -7,7 +7,15 @@
 {% endblock %}
 
 {% block body %}
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <span class="navbar-brand " id="welcome">Hi </span>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <div class="navbar-nav mr-auto">
 
+        </div>
+
+    </div>
+</nav>
 
 <div class="jumbotron text-center">
     <div class="container">
@@ -18,10 +26,10 @@
         <div class="row">
             <div class="col-md-4 offset-md-4">
                 <h1>Create</h1>
-                <form id="channel" method="POST">
+                <form id="channelForm" method="POST">
                     <div class="form-group">
 
-                        <input type="text" autofocus class="form-control" id="inputValue" placeholder="Channel Name">
+                        <input type="text" autofocus class="form-control" id="formValue" placeholder="Channel Name">
                     </div>
 
                     <button type="submit" class="btn btn-primary">Submit</button>

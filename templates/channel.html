@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% block title_page %} Main Page{% endblock %}
+{% block title_page %} Channel Page{% endblock %}
 
 
 {% block extra %}
@@ -7,16 +7,22 @@
 {% endblock %}
 
 {% block body %}
-
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <span class="navbar-brand ">Hi user_name</span>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <div class="navbar-nav mr-auto">
+        </div>
+    </div>
+</nav>
 
 <div class="jumbotron text-center">
     <div class="container">
         <h1 class="jumbotron-heading">Channel Name: {{channel_name}}</h1>
         <br>
+    
         <br>
-
-
     </div>
-</div>
+    </div>
 
 {% endblock %}
+

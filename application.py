@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask_socketio import SocketIO, emit
 
 app = Flask(__name__)
@@ -24,7 +24,7 @@ def create_join():
 
 @app.route("/channel/<string:name>")
 def channel(name):
-    channel_list.append(name)
+    channel_list.append(name) #iff the user clicks on the link, then the server will save the channel
     return render_template("channel.html", channel_name=name)
 
 
