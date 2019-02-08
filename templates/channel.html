@@ -3,12 +3,14 @@
 
 
 {% block extra %}
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='channel.js') }}"></script>
 {% endblock %}
 
 {% block body %}
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-    <span class="navbar-brand ">Hi user_name</span>
+    <span class="navbar-brand "> </span>
+    <span class="navbar-brand " style="width: 100%;text-align: center"> Channel Name: {{channel_name}} </span>
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <div class="navbar-nav mr-auto">
         </div>
@@ -17,12 +19,40 @@
 
 <div class="jumbotron text-center">
     <div class="container">
-        <h1 class="jumbotron-heading">Channel Name: {{channel_name}}</h1>
+        <div class="row">
+            <h1 class="col-md-4 offset-md-4">Current Messages</h1>
+            <div class="col-md-4 offset-md-4">
+                <ul id="messages">
+
+
+                </ul>
+            </div>
+        </div>
         <br>
-    
         <br>
+        <div class="row">
+            <div class="col-md-4 offset-md-4">
+                
+                <form id="messageForm" method="POST">
+                    <div class="form-group">
+
+                        <input type="text" autofocus class="form-control" id="formInput" placeholder="Type a message...">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Send</button>
+                </form>
+
+            </div>
+        </div>
+
+
+
+
+
+
+
     </div>
-    </div>
+
+</div>
 
 {% endblock %}
-
