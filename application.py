@@ -25,20 +25,30 @@ def create_join():
 
 @app.route("/channel/<string:name>")
 def channel(name):
-    channel_list.append(name) #iff the user clicks on the link, then the server will save the channel
+    # iff the user clicks on the link, then the server will save the channel
+    channel_list.append(name)
     return render_template("channel.html", channel_name=name)
 
 
-#this will accept a json object
+# this will accept a json object
 @socketio.on("server message")
 def vote(data):
-    print("-------->before selection")
+    print("-------->before selection    "+request.sid)
     selection = data["message"]
-    
+    room=data["room"]
     print("------------>after selection")
     print("you message from client "+selection)
-  
-    emit("client message", {"serverOut": selection}, broadcast=True,)
+    print("----------->"+room)
+    emit("client message", {"serverOut": selection}, room=room)
+
+
+@socketio.on('join')
+def on_join(data):
+
+    room = data['room']
+    join_room(room)
+    
+
 
 if __name__ == '__main__':
     socketio.run(app, debug=True)

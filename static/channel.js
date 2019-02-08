@@ -11,12 +11,15 @@ document.addEventListener('DOMContentLoaded', function () {
     //further, there is another lamnda function "onsubmit"
     socket.on('connect', () => {
         console.log("working ");
-        
+
         var message;
         document.querySelector('#messageForm').onsubmit = () => {
             message = document.querySelector('#formInput').value;
             console.log(message);
-           socket.emit('server message', { 'message': message });
+            //location.pathname will always be unique
+            socket.emit('join', { 'room':location.pathname });
+
+            socket.emit('server message', { 'message': message,'room':location.pathname });
             return false;
         }
 
@@ -48,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function () {
     */
 
     socket.on('client message', data => {
-        console.log(data.room)
+        
         const li = document.createElement('li');
         li.innerHTML = `Your mesage is: ${data.serverOut}`;
         document.querySelector('#messages').append(li);
