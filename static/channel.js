@@ -11,13 +11,13 @@ document.addEventListener('DOMContentLoaded', function () {
     //further, there is another lamnda function "onsubmit"
     socket.on('connect', () => {
         console.log("working ");
-
+        socket.emit('join', { 'room':location.pathname });
         var message;
         document.querySelector('#messageForm').onsubmit = () => {
             message = document.querySelector('#formInput').value;
             console.log(message);
             //location.pathname will always be unique
-            socket.emit('join', { 'room':location.pathname });
+           
 
             socket.emit('server message', { 'message': message,'room':location.pathname });
             return false;
