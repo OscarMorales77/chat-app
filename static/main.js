@@ -12,6 +12,7 @@ function create() {
     // use the backtick string formating like python
     anchorItem.setAttribute('href', `/channel/${document.querySelector('#formValue').value}`);
     anchorItem.innerHTML = document.querySelector('#formValue').value;
+    // check if regular append workds : TO DO!
     listItem.appendChild(anchorItem);
     document.querySelector('#items').append(listItem);
     // so that the form is not submitted
