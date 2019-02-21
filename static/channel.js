@@ -11,14 +11,15 @@ document.addEventListener('DOMContentLoaded', function () {
     //further, there is another lamnda function "onsubmit"
     socket.on('connect', () => {
         console.log("working ");
-        socket.emit('join', { 'room':location.pathname });
+        //join a "room" with the unique location.pathname (JS method) name
+        socket.emit('join', { 'room':location.pathname }); // notice how we are calling emit(); right away
         var message;
         document.querySelector('#messageForm').onsubmit = () => {
             message = document.querySelector('#formInput').value;
             console.log(message);
-            //location.pathname will always be unique
-           
 
+            //location.pathname will always be unique
+            //pass to the socket "data" as parameter in this case a JSON object
             socket.emit('server message', { 'message': message,'room':location.pathname });
             return false;
         }
@@ -49,11 +50,13 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     */
-
+    //this is when the server send a message to socket "client message"
     socket.on('client message', data => {
-        
+        // console.log("the data content is")
+        // console.log(data)
+        // console.log(data.test)
         const li = document.createElement('li');
-        li.innerHTML = `Your mesage is: ${data.serverOut}`;
+        li.innerHTML = `Your mesage is: ${data.serverOut}`; //data.serverOut grams that json key "serverOUt"
         document.querySelector('#messages').append(li);
     });
 
