@@ -1,6 +1,12 @@
 document.addEventListener('DOMContentLoaded', function () {
 
     localStorage.setItem('lastChannel', document.URL);
+    //send a ajax request to the server when the user visits the channel for the first time
+    const request = new XMLHttpRequest();
+    request.open('POST', location.pathname);
+    const data = new FormData();
+    data.append('userName', localStorage.getItem('userName'));
+    request.send(data);
 
     document.querySelector('span').innerHTML = `Hi, ${localStorage.getItem('userName')}`;
 

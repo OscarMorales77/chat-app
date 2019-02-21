@@ -9,8 +9,8 @@ socketio = SocketIO(app)
 
 # Global Variables
 channel_list = set() 
-message={} #will store channel messages in a map as it is more effficient
-
+message={} #a map that links a channel name to a Queue ADT
+channel_users={}
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -22,16 +22,31 @@ def create_join():
     return render_template("main.html", channel_list=channel_list)
 
 
-@app.route("/channel/<string:name>")
+def add_user_channel(name,userName):
+    if name in channel_users:
+        channel_users.get(name).add(userName)
+    else:
+        channel_users[name]=set([userName])
+
+
+# iff the user clicks on the link, then the server will save the channel
+@app.route("/channel/<string:name>", methods=["POST", "GET"])
 def channel(name):
-     # iff the user clicks on the link, then the server will save the channel
+    if request.method == "POST":
+        print("post method is called")
+        userName = request.form.get("userName")
+        print(userName)
+        add_user_channel(name,userName)
+        return 'ok'
+
     if name not in channel_list:
         channel_list.add(name)
         #associate with every channel a queue where messages will be stored
         message[f'/channel/{name}']=Queue(4)    
 
     current_Q=message.get(f'/channel/{name}')
-    return render_template("channel.html", channel_name=name,stored_messages=list(current_Q.queue))
+    print(channel_users.get(name))
+    return render_template("channel.html", channel_name=name,stored_messages=list(current_Q.queue),users=channel_users.get(name))
 
 
 # this will accept a json object

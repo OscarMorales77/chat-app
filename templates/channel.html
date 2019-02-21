@@ -34,15 +34,40 @@
         <br>
         <div class="row">
             <div class="col-md-4 offset-md-4">
-                
+
                 <form id="messageForm" method="POST">
                     <div class="form-group">
 
-                        <input type="text" autofocus class="form-control" id="formInput" placeholder="Type a message...">
+                        <input type="text" autofocus class="form-control" id="formInput"
+                            placeholder="Type a message...">
                     </div>
 
                     <button type="submit" class="btn btn-primary">Send</button>
                 </form>
+
+            </div>
+            <div class="col">
+                <h5>Select Recipient</h5>
+                <div>
+                    <input type="radio" id="all" name="allUsers" value="all" checked="checked">
+                    <label for="dewey">All Users</label>
+                </div>
+
+                {% if users is not none %}
+
+                {% for user in users %}
+                <div>
+                    <input type="radio" id="{{user}}" name="allUsers" value="{{user}}">
+                    <label>{{user}}</label>    
+                </div>
+
+                {% endfor %}
+
+                {%endif %}
+
+
+
+
 
             </div>
         </div>
