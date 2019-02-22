@@ -1,8 +1,8 @@
 var recepient = 'all';
 document.addEventListener('DOMContentLoaded', function () {
-
+    
     setAttributes();
-  
+
     createButtons();
 
     var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);

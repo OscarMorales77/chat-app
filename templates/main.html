@@ -3,7 +3,14 @@
 
 
 {% block extra %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='main.js') }}"></script>
+<script id="alertTemplate" type="text/x-handlebars-template">
+<div class="alert alert-danger" role="alert">
+  Room already exists, try again.
+</div>
+
+</script>
 {% endblock %}
 
 {% block body %}
@@ -21,6 +28,12 @@
     <div class="container">
         <h1 class="jumbotron-heading">Welcome, create or join a channel.</h1>
         <br>
+        <div  class="row">
+            <div id="alert" class="col-md-4 offset-md-4">
+
+            </div>
+
+        </div>
         <br>
 
         <div class="row">
@@ -45,7 +58,7 @@
             <div class="col-md-4 offset-md-4">
                 <ul id="items">
                     {% for item in channel_list %}
-                    <li><a href="/channel/{{item}}">{{item}}</a></li>
+                    <li><a class="anchorChannel" href="/channel/{{item}}">{{item}}</a></li>
                     {% endfor %}
 
                 </ul>
