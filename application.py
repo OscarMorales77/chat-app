@@ -34,9 +34,7 @@ def add_user_channel(name,userName):
 @app.route("/channel/<string:name>", methods=["POST", "GET"])
 def channel(name):
     if request.method == "POST":
-        print("post method is called")
         userName = request.form.get("userName")
-        print(userName)
         add_user_channel(name,userName)
         return 'ok'
 
@@ -46,7 +44,6 @@ def channel(name):
         message[f'/channel/{name}']=Queue(4)    
 
     current_Q=message.get(f'/channel/{name}')
-    print(channel_users.get(name))
     return render_template("channel.html", channel_name=name,stored_messages=list(current_Q.queue),users=channel_users.get(name))
 
 
@@ -61,14 +58,9 @@ def process_message(data):
         current_Q.put(selection) #insert a new message
     else:
        current_Q.put(selection) 
-    # print("------------>after selection  " +room)
-    # print("you message from client "+selection)
-    # print("----------->"+room)
-    # print(list(current_Q.queue))
-    # print(type(list(current_Q.queue)))
     emit("client message", {"serverOut": selection,'test':'just a test'}, room=room)
 
-# this will accept a json object
+
 @socketio.on("private message")
 def private_message(data):
     selection = data["message"]
@@ -82,7 +74,6 @@ def private_message(data):
 @socketio.on('join')
 def on_join(data):
     users_sid[data['user']]=request.sid
-    print(f"-----------> {data['user']}  : {request.sid}")
     room=data["room"]
     join_room(room)
     emit("new user", {"newUser": data['user']}, room=room)

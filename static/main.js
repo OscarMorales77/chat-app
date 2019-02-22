@@ -4,17 +4,15 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelector('span').innerHTML = `Hi, ${localStorage.getItem('userName')}`;
 
     document.querySelectorAll('.anchorChannel').forEach( elementA => { set1.add(elementA.textContent)});
-    console.log(set1.values)
+
     document.querySelector('#channelForm').onsubmit= create;
 });
 
 
 function create() {
     newChannelName=document.querySelector('#formValue').value;
-    console.log("channel is "+ document.querySelector('#formValue').value);
-    console.log(set1.has(newChannelName))
+
     if (!set1.has(newChannelName)) {
-        console.log("in the  ifffffffffffff");
         const listItem = document.createElement('li');
         const anchorItem = document.createElement('a');
         // use the backtick string formating like python
@@ -26,14 +24,13 @@ function create() {
         // so that the form is not submitted
         set1.add(newChannelName)
     } else {
-
+        //Alert the user the channel already exists
         const post_template = Handlebars.compile(document.querySelector('#alertTemplate').innerHTML);
         const post = post_template();
         document.querySelector('#alert').innerHTML += post;
         console.log("alredy in the list")
     }
     
-    console.log("end of function call")
     return false;
 }
 
