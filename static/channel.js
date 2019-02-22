@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function () {
-
     localStorage.setItem('lastChannel', document.URL);
     //send a ajax request to the server when the user visits the channel for the first time
     const request = new XMLHttpRequest();
@@ -7,63 +6,64 @@ document.addEventListener('DOMContentLoaded', function () {
     const data = new FormData();
     data.append('userName', localStorage.getItem('userName'));
     request.send(data);
-
     document.querySelector('span').innerHTML = `Hi, ${localStorage.getItem('userName')}`;
+
 
     var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
     console.log("your out is " + location.protocol + '//' + document.domain + ':' + location.port);
+    var recepient = 'all'
+    console.log('current recpepient  ' + recepient);
 
+    function createButtons() {
+        document.querySelectorAll('.currentUsers').forEach(button => {
+            button.onclick = () => {
+                recepient = button.dataset.user;
+                console.log(recepient);
+            };
+        });
+    }
+    createButtons();
     // the callback function for socket.on is the lamda function  that is called once the socket is connected
     //further, there is another lamnda function "onsubmit"
     socket.on('connect', () => {
         console.log("working ");
         //join a "room" with the unique location.pathname (JS method) name
-        socket.emit('join', { 'room':location.pathname }); // notice how we are calling emit(); right away
+        socket.emit('join', { 'room': location.pathname, 'user': localStorage.getItem('userName')}); // notice how we are calling emit(); right away
         var message;
         document.querySelector('#messageForm').onsubmit = () => {
             message = document.querySelector('#formInput').value;
-            console.log(message);
+            if (recepient === 'all') {
+                socket.emit('server message', { 'message': message, 'room': location.pathname });
+                return false;
+            } else {
+                socket.emit('private message', { 'message': message, 'recepient': recepient});
+                return false;
+            }
 
-            //location.pathname will always be unique
-            //pass to the socket "data" as parameter in this case a JSON object
-            socket.emit('server message', { 'message': message,'room':location.pathname });
-            return false;
         }
-
-
-
     });
 
     console.log("does not wait")
-    /*
-    document.querySelector('#messageForm').onsubmit = () => {
-        var message = document.querySelector('#formInput').value;
-        console.log(message);
-        socket.on('connect', () =>  {
-            console.log("working "+message)
-            socket.emit('server message', { 'message': message });
-        });
 
-
-        return false;
-    }
-
-      // When  the server emmits a message, add to the unordered list
-      socket.on('client message', data => {
-        const li = document.createElement('li');
-        li.innerHTML = `Your mesage is: ${data.serverOut}`;
-        document.querySelector('#messages').append(li);
-    });
-
-    */
-    //this is when the server send a message to socket "client message"
+    //this is when the server sends a message to socket "client message"
     socket.on('client message', data => {
-        // console.log("the data content is")
-        // console.log(data)
-        // console.log(data.test)
         const li = document.createElement('li');
         li.innerHTML = `Your mesage is: ${data.serverOut}`; //data.serverOut grams that json key "serverOUt"
         document.querySelector('#messages').append(li);
+    });
+
+    socket.on('new user', data => {
+        console.log("new user is "+data.newUser)
+        console.log("current user is  "+localStorage.getItem('userName'))
+        if (data.newUser!=localStorage.getItem('userName')) {
+            const post_template = Handlebars.compile(document.querySelector('#selectionTemplate').innerHTML);
+            const post = post_template({'content': data.newUser});
+            document.querySelector('#channelUsers').innerHTML += post;
+
+            createButtons();
+        }
+
+
     });
 
 

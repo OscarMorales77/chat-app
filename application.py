@@ -10,7 +10,8 @@ socketio = SocketIO(app)
 # Global Variables
 channel_list = set() 
 message={} #a map that links a channel name to a Queue ADT
-channel_users={}
+channel_users={}# for every channel associate with it a set that will have all current users
+users_sid={}#allows private messages by linking session ID of the connection to the respective user
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -68,12 +69,21 @@ def process_message(data):
     # print(type(list(current_Q.queue)))
     emit("client message", {"serverOut": selection,'test':'just a test'}, room=room)
 
+# this will accept a json object
+@socketio.on("private message")
+def private_message(data):
+    selection = data["message"]
+    room=users_sid.get(data['recepient']) #get the sid of the recepient
+    emit("client message", {"serverOut": selection}, room=room)
+
 
 @socketio.on('join')
 def on_join(data):
-    room = data['room']
+    users_sid[data['user']]=request.sid
+    print(f"-----------> {data['user']}  : {request.sid}")
+    room=data["room"]
     join_room(room)
-    
+    emit("new user", {"newUser": data['user']}, room=room)
 
 if __name__ == '__main__':
     socketio.run(app, debug=True)
