@@ -13,7 +13,8 @@ document.addEventListener('DOMContentLoaded', function () {
         socket.emit('join', { 'room': location.pathname, 'user': localStorage.getItem('userName') });
         let message;
         document.querySelector('#messageForm').onsubmit = () => {
-            message = document.querySelector('#formInput').value;
+            message=`${localStorage.getItem('userName')}  (${ (new Date()).toUTCString()}):  ${document.querySelector('#formInput').value}`
+            //message = document.querySelector('#formInput').value;
             if (recepient === 'all') {
                 console.log("too all")
                 console.log("current recepient is "+ recepient)
@@ -21,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 return false;
             } else {
                 console.log("privae message")
-                socket.emit('private message', { 'message': message, 'recepient': recepient });
+                socket.emit('private message', { 'message': message, 'recepient': recepient,'sender':localStorage.getItem('userName') });
                 return false;
             }
 
@@ -31,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
     //message from server
     socket.on('client message', data => {
         const li = document.createElement('li');
-        li.innerHTML = `Your mesage is: ${data.serverOut}`; 
+        li.innerHTML = data.serverOut; 
         document.querySelector('#messages').append(li);
     });
 

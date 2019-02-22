@@ -53,7 +53,6 @@ def channel(name):
 # this will accept a json object
 @socketio.on("server message")
 def process_message(data):
-    print("-------->SID of client "+request.sid)
     selection = data["message"]
     room=data["room"]
     current_Q=message.get(room)
@@ -74,7 +73,10 @@ def process_message(data):
 def private_message(data):
     selection = data["message"]
     room=users_sid.get(data['recepient']) #get the sid of the recepient
+    room2=users_sid.get(data['sender'])
     emit("client message", {"serverOut": selection}, room=room)
+    emit("client message", {"serverOut": selection}, room=room2)
+
 
 
 @socketio.on('join')

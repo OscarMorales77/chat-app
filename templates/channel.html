@@ -3,6 +3,31 @@
 
 
 {% block extra %}
+<style>
+    ::-webkit-scrollbar {
+        -webkit-appearance: none;
+        width: 7px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        border-radius: .5em;;
+        background-color:#666;;
+    }
+
+    nav ul {
+        height: 200px;
+        overflow: hidden;
+        overflow-y: scroll;
+        background-color: #343a40;
+        color: #17a2b8;
+        border-style: solid;
+        /* border-width: 3px;
+    border-left-width: 10px;
+    border-right-width: 10px; */
+        border-color: #17a2b8;
+        ;
+    }
+</style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
 <!-- Handle Bars Template System -->
@@ -12,6 +37,7 @@
         <label>{% raw -%} {{ content }} {%- endraw %}</label>
     </div>
 </script>
+
 
 <script type="text/javascript" src="{{ url_for('static', filename='channel.js') }}"></script>
 {% endblock %}
@@ -23,66 +49,74 @@
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <div class="navbar-nav mr-auto">
         </div>
+
+        <form class="form-inline mt-2 mt-md-0" action="/channel" method="GET">
+
+            <button class="btn btn-outline-info my-2 my-sm-0 " type="submit">Channel List</button>
+        </form>
     </div>
 </nav>
 
-<div class="jumbotron text-center">
+<div class="jumbotron ">
     <div class="container">
         <div class="row">
             <h1 class="col-md-4 offset-md-4">Current Messages</h1>
-            <div class="col-md-4 offset-md-4">
+        </div>
+        <div class="row" id="scroll">
+            <nav class="col-md-8 offset-md-3">
                 <ul id="messages">
                     {% for item in stored_messages %}
-                    <li>{{item}}</a></li>
+                    <li>{{item}}</li>
                     {% endfor %}
 
                 </ul>
-            </div>
+
         </div>
-        <br>
-        <br>
-        <div class="row">
-            <div class="col-md-4 offset-md-4">
-
-                <form id="messageForm" method="POST">
-                    <div class="form-group">
-
-                        <input type="text" autofocus class="form-control" id="formInput"
-                            placeholder="Type a message...">
-                    </div>
-
-                    <button type="submit" class="btn btn-primary">Send</button>
-                </form>
-
-            </div>
-            <div class="col" id="channelUsers">
-                <h5>Select Recipient</h5>
-                <div>
-                    <input type="radio" name="allUsers" class="currentUsers" data-user="all" checked="checked">
-                    <label>All Users</label>
-                </div>
-
-                {% if users is not none %}
-
-                {% for user in users %}
-                <div>
-                    <input type="radio" class="currentUsers" data-user="{{user}}" name="allUsers">
-                    <label>{{user}}</label>
-                </div>
-
-                {% endfor %}
-
-                {%endif %}
-
-
-
-
-
-            </div>
-        </div>
-
-
     </div>
+
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-md-4 offset-md-4">
+
+            <form id="messageForm" method="POST">
+                <div class="form-group">
+
+                    <input type="text" autofocus class="form-control" id="formInput" placeholder="Type a message...">
+                </div>
+
+                <button type="submit" class="btn btn-primary">Send</button>
+            </form>
+
+        </div>
+        <div class="col" id="channelUsers">
+            <h5>Select Recipient</h5>
+            <div>
+                <input type="radio" name="allUsers" class="currentUsers" data-user="all" checked="checked">
+                <label>All Users</label>
+            </div>
+
+            {% if users is not none %}
+
+            {% for user in users %}
+            <div>
+                <input type="radio" class="currentUsers" data-user="{{user}}" name="allUsers">
+                <label>{{user}}</label>
+            </div>
+
+            {% endfor %}
+
+            {%endif %}
+
+
+
+
+
+        </div>
+    </div>
+
+
+</div>
 
 </div>
 
