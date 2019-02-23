@@ -35,10 +35,10 @@ def add_user_channel(name, userName):
 # iff the user clicks on the link, then the server will save the channel
 @app.route("/channel/<string:name>", methods=["POST", "GET"])
 def channel(name):
-    if request.method == "POST":
+    if request.method == "POST": # handles adding a user to a given page via ajax request 
         userName = request.form.get("userName")
         add_user_channel(name, userName)
-        return 'ok'
+        return 'ok' 
 
     if name not in channel_list:
         channel_list.add(name)
@@ -46,8 +46,7 @@ def channel(name):
         message[f'/channel/{name}'] = Queue(100)
 
     current_Q = message.get(f'/channel/{name}')
-    return render_template("channel.html", channel_name=name, stored_messages=list(current_Q.queue),
-                           users=channel_users.get(name))
+    return render_template("channel.html", channel_name=name, stored_messages=list(current_Q.queue), users=channel_users.get(name))
 
 
 # this will accept a json object
@@ -61,14 +60,14 @@ def process_message(data):
         current_Q.put(selection)  # insert a new message
     else:
         current_Q.put(selection)
-    emit("client message", {"serverOut": selection, 'test': 'just a test'}, room=room)
+    emit("client message", {"serverOut": selection}, room=room)
 
-
+#handles private communication between users
 @socketio.on("private message")
 def private_message(data):
     selection = data["message"]
-    room = users_sid.get(data['recepient'])  # get the sid of the recepient
-    room2 = users_sid.get(data['sender'])
+    room = users_sid.get(data['recipient'])  # get the sid of the recipient
+    room2 = users_sid.get(data['sender']) #send the message to the recipient also for private communications
     emit("client message", {"serverOut": selection}, room=room)
     emit("client message", {"serverOut": selection}, room=room2)
 

@@ -1,4 +1,4 @@
-var recepient = 'all';
+var recipient = 'all';
 document.addEventListener('DOMContentLoaded', function () {
     
     setAttributes();
@@ -14,11 +14,11 @@ document.addEventListener('DOMContentLoaded', function () {
         document.querySelector('#messageForm').onsubmit = () => {
             message=`${localStorage.getItem('userName')}  (${ (new Date()).toUTCString()}):  ${document.querySelector('#formInput').value}`
  
-            if (recepient === 'all') {
+            if (recipient === 'all') {
                 socket.emit('server message', { 'message': message, 'room': location.pathname });
                 return false;
             } else {
-                socket.emit('private message', { 'message': message, 'recepient': recepient,'sender':localStorage.getItem('userName') });
+                socket.emit('private message', { 'message': message, 'recipient': recipient,'sender':localStorage.getItem('userName') });
                 return false;
             }
 
@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const post_template = Handlebars.compile(document.querySelector('#selectionTemplate').innerHTML);
             const post = post_template({ 'content': data.newUser });
             document.querySelector('#channelUsers').innerHTML += post;
-            createButtons();
+            createButtons();// assign an onclick attribute to every radio button
         }
     });
 
@@ -49,6 +49,7 @@ document.addEventListener('DOMContentLoaded', function () {
 function setAttributes() {
     document.querySelector('span').innerHTML = `Hi, ${localStorage.getItem('userName')}`;
     localStorage.setItem('lastChannel', document.URL);
+    // send a ajax request with the user's username via ajax to be stored in the server
     const request = new XMLHttpRequest();
     request.open('POST', location.pathname);
     const data = new FormData();
@@ -59,7 +60,7 @@ function setAttributes() {
 function createButtons() {
     document.querySelectorAll('.currentUsers').forEach(button => {
         button.onclick = () => {
-            recepient = button.dataset.user;
+            recipient = button.dataset.user; //change the current recipient
         };
     });
 }
