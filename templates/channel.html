@@ -3,7 +3,8 @@
 
 
 {% block extra %}
-<style>
+<style>https://www.youtube.com/watch?v=2WjBqxuZbO0
+
     ::-webkit-scrollbar {
         -webkit-appearance: none;
         width: 7px;
@@ -27,13 +28,15 @@
         border-color: #17a2b8;
         ;
     }
+
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
 <!-- Handle Bars Template System -->
 <script id="selectionTemplate" type="text/x-handlebars-template">
     <div>
-        <input type="radio" class="currentUsers" data-user="{% raw -%} {{ content }} {%- endraw %}" name="allUsers" id="{% raw -%}{{ content }}{%- endraw %}">
+        <input type="radio" class="currentUsers" data-user="{% raw -%} {{ content }} {%- endraw %}" name="allUsers"
+               id="{% raw -%}{{ content }}{%- endraw %}">
         <label>{% raw -%} {{ content }} {%- endraw %}</label>
     </div>
 </script>
@@ -107,9 +110,6 @@
             {% endfor %}
 
             {%endif %}
-
-
-
 
 
         </div>
