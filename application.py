@@ -24,18 +24,19 @@ def index():
 def create_join():
     return render_template("main.html", channel_list=channel_list)
 
-#helper function see below
-def add_user_channel(name, userName):
+#every channel(chat-room) has a SET(Data Structure) of current users, this helper function either adds the user
+#to the SET or create a new SET(ADT) and adds that user into the set
+def add_user_channel(name, userName): #the SET already exisits for this channel, just add the new user
     if name in channel_users:
         channel_users.get(name).add(userName)
     else:
-        channel_users[name] = set([userName])
+        channel_users[name] = set([userName]) #this channel does not have a SET, create one and add current user into
 
 
 # iff the user clicks on the link, then the server will save the channel
 @app.route("/channel/<string:name>", methods=["POST", "GET"])
 def channel(name):
-    if request.method == "POST": # handles adding a user to a given page via ajax request 
+    if request.method == "POST": # handles adding a user to a given chat-room via ajax request 
         userName = request.form.get("userName")
         add_user_channel(name, userName) #helper function to check if the user has already visted the current room and set
         return 'ok' 
