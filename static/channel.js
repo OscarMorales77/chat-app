@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
         let message;
         document.querySelector('#messageForm').onsubmit = () => {
             message=`${localStorage.getItem('userName')}  (${ (new Date()).toUTCString()}):  ${document.querySelector('#formInput').value}`
- 
+            document.querySelector('#formInput').value='';
             if (recipient === 'all') {
                 socket.emit('server message', { 'message': message, 'room': location.pathname });
                 return false;
