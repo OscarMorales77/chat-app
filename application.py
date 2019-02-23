@@ -1,7 +1,7 @@
 import os
 from queue import Queue
 from flask import Flask, render_template, request
-from flask_socketio import SocketIO, emit, join_room, leave_room
+from flask_socketio import SocketIO, emit, join_room
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
@@ -24,7 +24,7 @@ def index():
 def create_join():
     return render_template("main.html", channel_list=channel_list)
 
-
+#helper function see below
 def add_user_channel(name, userName):
     if name in channel_users:
         channel_users.get(name).add(userName)
@@ -37,7 +37,7 @@ def add_user_channel(name, userName):
 def channel(name):
     if request.method == "POST": # handles adding a user to a given page via ajax request 
         userName = request.form.get("userName")
-        add_user_channel(name, userName)
+        add_user_channel(name, userName) #helper function to check if the user has already visted the current room and set
         return 'ok' 
 
     if name not in channel_list:
@@ -49,12 +49,12 @@ def channel(name):
     return render_template("channel.html", channel_name=name, stored_messages=list(current_Q.queue), users=channel_users.get(name))
 
 
-# this will accept a json object
+# handle incoming and outgoing messages that are not private
 @socketio.on("server message")
 def process_message(data):
-    selection = data["message"]
+    selection = data["message"] # based on the json object passed by the client
     room = data["room"]
-    current_Q = message.get(room)
+    current_Q = message.get(room) #get the Queue Data Structure associated with this room
     if current_Q.full():
         current_Q.get()  # remove the oldest message
         current_Q.put(selection)  # insert a new message
@@ -71,13 +71,13 @@ def private_message(data):
     emit("client message", {"serverOut": selection}, room=room)
     emit("client message", {"serverOut": selection}, room=room2)
 
-
+#join a room and save the SID of the user, the sid is always different for every session, so must be updated everything a connection is made
 @socketio.on('join')
 def on_join(data):
-    users_sid[data['user']] = request.sid
+    users_sid[data['user']] = request.sid #put key-value pair (username and sid) into dictionary
     room = data["room"]
     join_room(room)
-    emit("new user", {"newUser": data['user']}, room=room)
+    emit("new user", {"newUser": data['user']}, room=room) #emit a new message so that the current users list can be updated via JavaScript code
 
 
 if __name__ == '__main__':
