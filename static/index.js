@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
   else if (localStorage.getItem('userName') != null && localStorage.getItem('lastChannel') === null) {
     //if the current sesssion has User Name redirect the user to the "channel" page
-    window.location.replace(location.protocol + "//" + location.host + "/channel")
+    window.location.replace(location.protocol + "//" + location.host + "/channel");
   }
 
   else {
