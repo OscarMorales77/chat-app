@@ -46,7 +46,7 @@ def channel(name):
     if name not in channel_list:
         channel_list.add(name)
         # associate with every channel a queue where messages will be stored
-        message[f'/channel/{name}'] = Queue(100)
+        message[f'/channel/{name}'] = Queue(15)
 
     current_Q = message.get(f'/channel/{name}')
     return render_template("channel.html", channel_name=name, stored_messages=list(current_Q.queue),
