@@ -1,8 +1,2 @@
-# Project 2
-
-Web Programming with Python and JavaScript
-The attached files meet the requirements for Project 2 Flack.  
-The templates directory contains all necessary html files to render the web application.  
-The static directory contains all necessary JavaScript files to render the client-side web application.  
-requirements.txt has been updated with all necessary packages  
-
+Chat by OM - Python, JavaScript, Flask, Bootstrap, HTML, CSS, Handlebars, Ajax, Socket.IO  
+A server-side JS driven online instant messaging service web application. Users are able to create a display name, join or create a chatroom. Users have to ability to either send a message to a private user or to all users in a chatroom. Using localStorage the application remembers the username and last visited channel. Ajax is used to dynamically update a chatroom when a new user enters the room.   
